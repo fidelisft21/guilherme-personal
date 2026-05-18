@@ -582,10 +582,13 @@
     padding: 2rem;
     position: relative;
     transition: border-color 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .depo-card:hover { border-color: rgba(200,168,75,0.25); transform: translateY(-4px); }
   .depo-stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 1.2rem; }
-  .depo-text { color: var(--gray); font-size: 0.9rem; line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; }
+  .depo-text { color: var(--gray); font-size: 0.9rem; line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; flex: 1; }
   .depo-text::before { content: '"'; color: var(--gold); font-size: 2rem; font-family: Georgia; line-height: 0; vertical-align: -0.5rem; margin-right: 0.3rem; }
   .depo-author { display: flex; align-items: center; gap: 1rem; }
   .depo-avatar {
