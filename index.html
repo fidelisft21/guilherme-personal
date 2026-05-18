@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUILHERME DE PAULA | Personal Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #050505;
+    --dark: #0d0d0d;
+    --card: #111111;
+    --border: #1e1e1e;
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(200,168,75,0.12);
+    --white: #f5f0e8;
+    --gray: #888;
+    --gray-light: #555;
+    --red: #d63a3a;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(5,5,5,0.92);
+    border-bottom-color: var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 0.55rem 1.4rem !important;
+    font-weight: 700 !important;
+    transition: background 0.3s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1.5px; background: var(--white); transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 10rem 2rem 6rem;
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    width: 100%;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+    justify-content: center;
+  }
+  .hero-tag::before { display: none; }
+  .hero-h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+  }
+  .hero-h1 span { color: var(--gold); }
+  .hero-sub {
+    color: var(--gray);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 3rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 1rem 2.5rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats {
+    display: flex; gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    justify-content: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.7rem; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.3rem; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-img-container {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a1200 0%, #0a0a0a 50%, #001a0a 100%);
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .hero-img-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(200,168,75,0.15) 0%, transparent 65%);
+  }
+  .hero-person {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+  }
+  .hero-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding-bottom: 3rem;
+  }
+  .hero-silhouette {
+    width: 320px; height: 520px;
+    background: linear-gradient(180deg, rgba(200,168,75,0.08) 0%, rgba(200,168,75,0.02) 100%);
+    border: 1px solid rgba(200,168,75,0.15);
+    clip-path: polygon(50% 0%, 80% 15%, 95% 45%, 85% 75%, 65% 85%, 60% 100%, 40% 100%, 35% 85%, 15% 75%, 5% 45%, 20% 15%);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-initials {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(200,168,75,0.4);
+    letter-spacing: 4px;
+    margin-top: -6rem;
+  }
+  .hero-overlay-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-badge {
+    position: absolute;
+    top: 6rem; left: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    animation: float 4s ease-in-out infinite;
+  }
+  .hero-badge-label { font-size: 0.65rem; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; }
+  .hero-badge-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--gold); margin-top: 0.2rem; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    z-index: 10;
+  }
+  .hero-scroll span { font-size: 0.6rem; letter-spacing: 3px; color: var(--gray); text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollline 2s ease-in-out infinite; }
+  @keyframes scrollline { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* ── SECTION COMMON ── */
+  section { position: relative; z-index: 2; }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+  .section-title span { color: var(--gold); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── SOBRE ── */
+  #sobre {
+    padding: 8rem 0;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: center; }
+  .sobre-img-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    max-height: 600px;
+  }
+  .sobre-img-main {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #181008, #0d1a0d);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: rgba(200,168,75,0.2);
+    letter-spacing: 3px;
+    position: relative; overflow: hidden;
+  }
+  .sobre-img-main::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,168,75,0.05) 0%, transparent 60%);
+  }
+  .sobre-accent {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    width: 60%; height: 60%;
+    border: 2px solid var(--gold);
+    z-index: -1;
+  }
+  .sobre-badge-cert {
+    position: absolute;
+    top: 1.2rem; left: 1.2rem;
+    background: var(--gold);
+    color: var(--black);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-align: center;
+    z-index: 2;
+  }
+  .sobre-desc { color: var(--gray); line-height: 1.8; font-size: 1rem; margin: 2rem 0; }
+  .sobre-certs { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
+  .cert-tag {
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.2);
+    color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+  }
+
+  /* ── SERVIÇOS ── */
+  #servicos {
+    padding: 8rem 0;
+    background: var(--black);
+  }
+  .servicos-header { text-align: center; margin-bottom: 5rem; }
+  .servicos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); }
+  .servico-card {
+    background: var(--card);
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: default;
+  }
+  .servico-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .servico-card:hover::before { transform: scaleX(1); }
+  .servico-card:hover { background: #151515; transform: translateY(-4px); }
+  .servico-icon {
+    width: 56px; height: 56px;
+    border: 1px solid rgba(200,168,75,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    transition: all 0.3s;
+  }
+  .servico-card:hover .servico-icon {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+  }
+  .servico-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+  }
+  .servico-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  .servico-desc { color: var(--gray); font-size: 0.9rem; line-height: 1.7; }
+
+  /* ── PLANOS ── */
+  #planos {
+    padding: 8rem 0;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+  .planos-header { text-align: center; margin-bottom: 1.5rem; }
+  .planos-sub { text-align: center; color: var(--gray); margin-bottom: 4rem; font-size: 0.95rem; }
+  .planos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .plano-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: all 0.4s ease;
+    display: flex; flex-direction: column;
+  }
+  .plano-card:hover { border-color: rgba(200,168,75,0.3); transform: translateY(-6px); }
+  .plano-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #181208 0%, #0d0d0d 100%);
+    transform: scale(1.03);
+  }
+  .plano-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+  .plano-badge {
+    position: absolute;
+    top: -1px; left: 50%; transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+  }
+  .plano-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .plano-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .plano-price {
+    display: flex; align-items: baseline; gap: 0.3rem;
+    margin: 1.5rem 0;
+  }
+  .price-currency { font-size: 1rem; color: var(--gold); font-weight: 700; }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .price-period { font-size: 0.75rem; color: var(--gray); }
+  .plano-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+  .plano-features { list-style: none; flex: 1; }
+  .plano-features li {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    font-size: 0.88rem;
+    color: var(--gray);
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .plano-features li:last-child { border-bottom: none; }
+  .feat-icon { color: var(--gold); font-size: 0.75rem; margin-top: 2px; flex-shrink: 0; }
+  .feat-icon.no { color: var(--gray-light); }
+  .feat-text.no { opacity: 0.4; text-decoration: line-through; }
+  .plano-btn {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0.9rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+  }
+  .plano-btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--border);
+  }
+  .plano-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .plano-btn-gold {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .plano-btn-gold:hover { background: var(--gold-light); }
+
+  /* ── MÉTODO ── */
+  #metodo {
+    padding: 8rem 0;
+    background: var(--black);
+    overflow: hidden;
+  }
+  .metodo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .metodo-steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    cursor: default;
+    transition: all 0.3s;
+  }
+  .step:hover { padding-left: 0.8rem; }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--border);
+    line-height: 1;
+    min-width: 60px;
+    transition: color 0.3s;
+  }
+  .step:hover .step-num { color: var(--gold); }
+  .step-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step-desc { color: var(--gray); font-size: 0.88rem; line-height: 1.7; }
+  .metodo-visual {
+    position: relative;
+    height: 500px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .metodo-circle {
+    width: 300px; height: 300px;
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: rotateSlow 20s linear infinite;
+  }
+  .metodo-circle::before {
+    content: '';
+    position: absolute;
+    width: 240px; height: 240px;
+    border: 1px solid rgba(200,168,75,0.1);
+    border-radius: 50%;
+    animation: rotateSlow 15s linear infinite reverse;
+  }
+  @keyframes rotateSlow { to { transform: rotate(360deg); } }
+  .metodo-center {
+    text-align: center;
+    animation: rotateSlow 20s linear infinite reverse;
+  }
+  .metodo-center-icon { font-size: 3rem; }
+  .metodo-center-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-top: 0.5rem;
+  }
+  .orbit-dot {
+    position: absolute;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    top: -5px; left: 50%; transform: translateX(-50%);
+  }
+  .orbit-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -28px;
+    left: 50%; transform: translateX(-50%);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    white-space: nowrap;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── DEPOIMENTOS ── */
+  #depoimentos {
+    padding: 8rem 0;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+  .depo-header { text-align: center; margin-bottom: 4rem; }
+  .depo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .depo-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .depo-card:hover { border-color: rgba(200,168,75,0.25); transform: translateY(-4px); }
+  .depo-stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 1.2rem; }
+  .depo-text { color: var(--gray); font-size: 0.9rem; line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; }
+  .depo-text::before { content: '"'; color: var(--gold); font-size: 2rem; font-family: Georgia; line-height: 0; vertical-align: -0.5rem; margin-right: 0.3rem; }
+  .depo-author { display: flex; align-items: center; gap: 1rem; }
+  .depo-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--gold);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .depo-name { font-weight: 700; font-size: 0.9rem; }
+  .depo-result { font-size: 0.72rem; color: var(--gold); letter-spacing: 1px; }
+
+  /* ── CTA ── */
+  #cta {
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #0d0900 0%, #050505 50%, #000d05 100%);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,168,75,0.08) 0%, transparent 70%);
+  }
+  .cta-tag { justify-content: center; }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 7rem);
+    line-height: 0.95;
+    margin: 1rem 0 2rem;
+    letter-spacing: 2px;
+  }
+  .cta-title span { color: var(--gold); }
+  .cta-sub { color: var(--gray); max-width: 550px; margin: 0 auto 3rem; line-height: 1.7; }
+  .cta-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto 2rem; }
+  .cta-input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-right: none;
+    color: var(--white);
+    padding: 1rem 1.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .cta-input:focus { border-color: var(--gold); }
+  .cta-input::placeholder { color: var(--gray-light); }
+  .cta-btn {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .cta-btn:hover { background: var(--gold-light); }
+  .cta-note { font-size: 0.72rem; color: var(--gray-light); letter-spacing: 1px; }
+
+  /* ── FAQ ── */
+  #faq {
+    padding: 8rem 0;
+    background: var(--black);
+  }
+  .faq-header { margin-bottom: 4rem; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+  }
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+  .faq-item:hover .faq-q { color: var(--gold); }
+  .faq-icon {
+    width: 28px; height: 28px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    color: var(--gold);
+    transition: transform 0.3s, background 0.3s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold-dim); }
+  .faq-a {
+    color: var(--gray);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin-top 0.3s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; margin-top: 1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 4rem 0 2rem;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand .nav-logo { font-size: 2rem; display: block; margin-bottom: 1rem; }
+  .footer-desc { color: var(--gray); font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+  .footer-socials { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+  .social-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col h4 { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-family: 'DM Mono', monospace; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul li a { color: var(--gray); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--gray-light); }
+  .footer-legal { display: flex; gap: 2rem; }
+  .footer-legal a { font-size: 0.75rem; color: var(--gray-light); text-decoration: none; transition: color 0.3s; }
+  .footer-legal a:hover { color: var(--gray); }
+
+  /* ── WHATSAPP FLOAT ── */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    background: #25D366;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    z-index: 200;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { min-height: 50vh; }
+    .hero-left { padding: 8rem 2.5rem 3rem; }
+    .sobre-grid, .metodo-grid, .faq-grid { grid-template-columns: 1fr; }
+    .planos-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+    .plano-card.featured { transform: none; }
+    .plano-card.featured:hover { transform: translateY(-6px); }
+    .servicos-grid { grid-template-columns: 1fr 1fr; }
+    .depo-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .metodo-visual { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-left { padding: 7rem 1.5rem 3rem; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+    .servicos-grid { grid-template-columns: 1fr; background: none; gap: 1rem; }
+    .servico-card { background: var(--card); border: 1px solid var(--border); }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .cta-form { flex-direction: column; }
+    .cta-input { border-right: 1px solid var(--border); border-bottom: none; }
+    nav { padding: 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/5521990019166?text=Quero%20saber%20mais%20sobre%20os%20planos!" class="whatsapp-float" target="_blank" title="Fale pelo WhatsApp">💬</a>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="nav-logo">GUILHERME</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#depoimentos">Resultados</a></li>
+    <li><a href="#cta" class="nav-cta">Começar agora</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Personal Trainer · Bacharel em Ed. Física · Rio de Janeiro</div>
+    <h1 class="hero-h1">
+      SEU CORPO.<br>
+      <span>SEU MAIOR</span><br>
+      PROJETO.
+    </h1>
+    <p class="hero-sub">
+      Treinamento personalizado, ciência e dedicação total para te levar além dos seus limites. Resultados reais, sem atalhos.
+    </p>
+    <div class="hero-btns">
+      <a href="#planos" class="btn-primary">Ver planos</a>
+      <a href="#metodo" class="btn-outline">Como funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">97%</div>
+        <div class="stat-label">Taxa de satisfação</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── SOBRE ── -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-img-wrap reveal-left">
+        <div class="sobre-img-main" style="padding:0; overflow:hidden;">
+          <img src="images/perfilg1.jpeg" alt="Guilherme Personal Trainer" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+          <div class="sobre-badge-cert">Ed. Física<br>Bacharelado</div>
+        </div>
+        <div class="sobre-accent"></div>
+      </div>
+      <div class="reveal-right">
+        <div class="section-tag">Sobre mim</div>
+        <h2 class="section-title">MAIS QUE UM TREINO, UMA <span>TRANSFORMAÇÃO</span></h2>
+        <p class="sobre-desc">
+          Sou Guilherme de Paula e Silva, Personal Trainer em formação pelo Bacharelado em Educação Física (5º período, conclusão prevista em 2028). Combino o conhecimento acadêmico atualizado com prática real e dedicação total ao progresso de cada aluno.
+        </p>
+        <p class="sobre-desc">
+          Participei do Projeto de Extensão Universitária, integrando teoria e prática em contextos reais de treinamento. Minha base técnica inclui Anatomia Musculoesquelética, Cinesiologia, Biomecânica, Fisiologia do Exercício, Avaliação Física e Primeiros Socorros/RCP. Atendo presencialmente no Rio de Janeiro e online para todo o Brasil.
+        </p>
+        <div class="sobre-certs">
+          <span class="cert-tag">Anatomia Musculoesquelética</span>
+          <span class="cert-tag">Avaliação Física</span>
+          <span class="cert-tag">Cinesiologia</span>
+          <span class="cert-tag">Biomecânica</span>
+          <span class="cert-tag">Fisiologia do Exercício</span>
+          <span class="cert-tag">Primeiros Socorros / RCP</span>
+          <span class="cert-tag">Online Coaching</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVIÇOS ── -->
+<section id="servicos">
+  <div class="container">
+    <div class="servicos-header reveal">
+      <div class="section-tag" style="justify-content:center">O que ofereço</div>
+      <h2 class="section-title">SERVIÇOS <span>COMPLETOS</span></h2>
+    </div>
+    <div class="servicos-grid">
+      <div class="servico-card reveal" style="transition-delay:0.05s">
+        <div class="servico-icon">🏋️</div>
+        <div class="servico-num">01</div>
+        <div class="servico-name">Treino Presencial</div>
+        <p class="servico-desc">Acompanhamento 100% personalizado em cada sessão. Técnica, progressão e motivação garantidas. Atendo na sua academia ou em domicílio.</p>
+      </div>
+      <div class="servico-card reveal" style="transition-delay:0.1s">
+        <div class="servico-icon">📱</div>
+        <div class="servico-num">02</div>
+        <div class="servico-name">Consultoria Online</div>
+        <p class="servico-desc">Planejamento completo enviado pelo app, com vídeos de execução, ajustes semanais e suporte via WhatsApp. Sem sair de casa.</p>
+      </div>
+      <div class="servico-card reveal" style="transition-delay:0.15s">
+        <div class="servico-icon">📋</div>
+        <div class="servico-num">03</div>
+        <div class="servico-name">Planilha de Treino</div>
+        <p class="servico-desc">Periodização científica individualizada com volume, intensidade e frequência calibrados para o seu objetivo e nível atual.</p>
+      </div>
+      <div class="servico-card reveal" style="transition-delay:0.2s">
+        <div class="servico-icon">🧘</div>
+        <div class="servico-num">04</div>
+        <div class="servico-name">Mobilidade & Recuperação</div>
+        <p class="servico-desc">Protocolos de mobilidade articular, alongamento e recuperação muscular integrados ao seu planejamento de treino.</p>
+      </div>
+      <div class="servico-card reveal" style="transition-delay:0.25s">
+        <div class="servico-icon">📊</div>
+        <div class="servico-num">05</div>
+        <div class="servico-name">Avaliação Física</div>
+        <p class="servico-desc">Bioimpedância, perimetria e análise postural completa. Acompanhamento mensal de composição corporal para ajustar a rota.</p>
+      </div>
+      <div class="servico-card reveal" style="transition-delay:0.3s">
+        <div class="servico-icon">🎯</div>
+        <div class="servico-num">06</div>
+        <div class="servico-name">Mentoria Fitness</div>
+        <p class="servico-desc">Sessões estratégicas para quem quer entender o processo, montar autonomia e construir hábitos sustentáveis a longo prazo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLANOS ── -->
+<section id="planos">
+  <div class="container">
+    <div class="planos-header reveal">
+      <div class="section-tag" style="justify-content:center">Investimento</div>
+      <h2 class="section-title">ESCOLHA SEU <span>PLANO</span></h2>
+    </div>
+    <p class="planos-sub reveal">Sem contratos longos surpresa. Cancele quando quiser. Comece hoje.</p>
+    <div class="planos-grid">
+
+      <!-- STARTER -->
+      <div class="plano-card reveal" style="transition-delay:0.05s">
+        <div class="plano-tier">Plano Starter</div>
+        <div class="plano-name">ESSENTIAL</div>
+        <div class="plano-price">
+          <span class="price-currency">R$</span>
+          <span class="price-amount">197</span>
+          <span class="price-period">/mês</span>
+        </div>
+        <div class="plano-divider"></div>
+        <ul class="plano-features">
+          <li><span class="feat-icon">✦</span><span class="feat-text">Planilha de treino personalizada</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Avaliação física inicial</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Vídeos de execução dos exercícios</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Suporte via WhatsApp (seg-sex)</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Revisão mensal da planilha</span></li>
+          <li><span class="feat-icon no">✦</span><span class="feat-text no">Acompanhamento presencial</span></li>
+          <li><span class="feat-icon no">✦</span><span class="feat-text no">Aulas presenciais</span></li>
+          <li><span class="feat-icon no">✦</span><span class="feat-text no">Check-in semanal de evolução</span></li>
+        </ul>
+        <a href="#cta" class="plano-btn plano-btn-outline">Quero este plano</a>
+      </div>
+
+      <!-- PRO (DESTAQUE) -->
+      <div class="plano-card featured reveal" style="transition-delay:0.1s">
+        <div class="plano-badge">Mais popular</div>
+        <div class="plano-tier">Plano Pro</div>
+        <div class="plano-name">PERFORMANCE</div>
+        <div class="plano-price">
+          <span class="price-currency">R$</span>
+          <span class="price-amount">397</span>
+          <span class="price-period">/mês</span>
+        </div>
+        <div class="plano-divider"></div>
+        <ul class="plano-features">
+          <li><span class="feat-icon">✦</span><span class="feat-text">Planilha de treino personalizada</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Avaliação física completa (mensal)</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Vídeos de execução + feedback</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Suporte ilimitado via WhatsApp</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Revisão quinzenal da planilha</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Protocolos de mobilidade e recuperação</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Check-in semanal com feedback</span></li>
+          <li><span class="feat-icon no">✦</span><span class="feat-text no">Aulas presenciais</span></li>
+        </ul>
+        <a href="#cta" class="plano-btn plano-btn-gold">Quero este plano</a>
+      </div>
+
+      <!-- ELITE -->
+      <div class="plano-card reveal" style="transition-delay:0.15s">
+        <div class="plano-tier">Plano Elite</div>
+        <div class="plano-name">PRESENCIAL</div>
+        <div class="plano-price">
+          <span class="price-currency">R$</span>
+          <span class="price-amount">797</span>
+          <span class="price-period">/mês</span>
+        </div>
+        <div class="plano-divider"></div>
+        <ul class="plano-features">
+          <li><span class="feat-icon">✦</span><span class="feat-text">Planilha de treino personalizada</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Avaliação física completa (mensal)</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Vídeos de execução + feedback</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Suporte ilimitado via WhatsApp</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Revisão semanal da planilha</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Protocolos de mobilidade e recuperação</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">Check-in diário</span></li>
+          <li><span class="feat-icon">✦</span><span class="feat-text">8 sessões presenciais/mês (RJ)</span></li>
+        </ul>
+        <a href="#cta" class="plano-btn plano-btn-outline">Quero este plano</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── MÉTODO ── -->
+<section id="metodo">
+  <div class="container">
+    <div class="metodo-grid">
+      <div>
+        <div class="section-tag reveal">Meu método</div>
+        <h2 class="section-title reveal">COMO VAMOS <span>CHEGAR LÁ</span></h2>
+        <div class="metodo-steps">
+          <div class="step reveal" style="transition-delay:0.05s">
+            <div class="step-num">01</div>
+            <div>
+              <div class="step-title">Anamnese & Avaliação</div>
+              <p class="step-desc">Entendemos seu histórico, limitações, rotina e objetivos reais antes de qualquer planejamento.</p>
+            </div>
+          </div>
+          <div class="step reveal" style="transition-delay:0.1s">
+            <div class="step-num">02</div>
+            <div>
+              <div class="step-title">Planejamento Científico</div>
+              <p class="step-desc">Montamos sua periodização com base em evidências: volume, intensidade, frequência e progressão de carga.</p>
+            </div>
+          </div>
+          <div class="step reveal" style="transition-delay:0.15s">
+            <div class="step-num">03</div>
+            <div>
+              <div class="step-title">Execução & Acompanhamento</div>
+              <p class="step-desc">Treino começa com supervisão técnica e acompanhamento constante. Cada rep conta.</p>
+            </div>
+          </div>
+          <div class="step reveal" style="transition-delay:0.2s">
+            <div class="step-num">04</div>
+            <div>
+              <div class="step-title">Ajuste & Evolução Contínua</div>
+              <p class="step-desc">Revisões periódicas para manter a progressão e adaptar o plano conforme seu corpo evolui.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="metodo-visual reveal-right">
+        <div class="metodo-circle">
+          <div class="orbit-dot" data-label="FORÇA"></div>
+          <div class="metodo-center">
+            <div class="metodo-center-icon">⚡</div>
+            <div class="metodo-center-text">MÉTODO GUILHERME</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEPOIMENTOS ── -->
+<section id="depoimentos">
+  <div class="container">
+    <div class="depo-header reveal">
+      <div class="section-tag" style="justify-content:center">Resultados reais</div>
+      <h2 class="section-title">O QUE DIZEM <span>MEUS ALUNOS</span></h2>
+    </div>
+    <div class="depo-grid">
+      <div class="depo-card reveal" style="transition-delay:0.05s">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">Em 4 meses perdi 18kg e ganhei massa muscular. O Guilherme muda a sua mentalidade sobre treino. Não é só academia, é estilo de vida.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">CM</div>
+          <div>
+            <div class="depo-name">Carlos M.</div>
+            <div class="depo-result">↓ 18kg em 4 meses · Plano Performance</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card reveal" style="transition-delay:0.1s">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">Nunca pensei que treinaria com tanta consistência. A planilha online é completa e o suporte é rápido. Me sinto acompanhada mesmo à distância.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">JR</div>
+          <div>
+            <div class="depo-name">Juliana R.</div>
+            <div class="depo-result">+8kg massa muscular · Plano Online</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card reveal" style="transition-delay:0.15s">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">Voltei a treinar após 3 anos parado. O Guilherme entendeu minhas limitações e criou um plano do zero. Hoje não paro mais.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">FS</div>
+          <div>
+            <div class="depo-name">Felipe S.</div>
+            <div class="depo-result">Reabilitação + hipertrofia · Plano Elite</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="container">
+    <div class="section-tag cta-tag reveal">Comece agora</div>
+    <h2 class="cta-title reveal">PRONTO PARA <span>MUDAR?</span></h2>
+    <p class="cta-sub reveal">Fale comigo diretamente pelo WhatsApp e receba uma análise gratuita do seu perfil e a melhor recomendação de plano para você.</p>
+    <a href="https://wa.me/5521990019166?text=Olá%20Guilherme!%20Quero%20saber%20mais%20sobre%20os%20planos." class="btn-primary reveal" target="_blank" style="display:inline-block; margin-bottom:1.5rem;">💬 Falar no WhatsApp</a>
+    <p class="cta-note reveal">Consulta inicial gratuita · Sem compromisso · Resposta rápida</p>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <div class="section-tag">Dúvidas frequentes</div>
+      <h2 class="section-title">PERGUNTAS <span>FREQUENTES</span></h2>
+    </div>
+    <div class="faq-grid">
+      <div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Atende fora do Rio de Janeiro? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Sim! Os planos Essential e Performance são 100% online e atendem alunos em todo o Brasil. O plano Presencial (Elite) é exclusivo para o Rio de Janeiro.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Preciso ter experiência em academia? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Não. Atendo iniciantes, intermediários e avançados. A periodização é sempre adaptada ao seu nível atual e evoluída conforme você progride.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Como funciona a planilha de treino? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Você recebe a planilha personalizada em formato digital (PDF + app), com exercícios, séries, repetições, carga sugerida e vídeos de execução para cada movimento.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Posso cancelar o plano a qualquer momento? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Sim. Não há fidelidade mínima. Você pode cancelar a qualquer momento com 15 dias de aviso prévio. Transparência é um dos meus valores.</div>
+        </div>
+      </div>
+      <div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">O plano inclui suporte completo além do treino? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Os planos Performance e Elite incluem protocolos de mobilidade, recuperação muscular e acompanhamento completo integrado ao treino. O plano Essential não inclui estes serviços.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Qual o método de pagamento? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Aceitamos cartão de crédito (parcelado em até 12x), PIX e boleto bancário. O plano é renovado mensalmente de forma automática.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Com que frequência a planilha é atualizada? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Depende do plano escolhido: Essential (mensal), Performance (quinzenal) e Elite (semanal). Ajustes emergenciais podem ser solicitados a qualquer momento.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Como faço para começar? <span class="faq-icon">+</span></div>
+          <div class="faq-a">Basta preencher o formulário acima ou me chamar no WhatsApp. Farei uma análise gratuita do seu perfil e indicarei o plano ideal para você em até 24h.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo">GUILHERME DE PAULA</span>
+        <p class="footer-desc">Personal Trainer · Bacharelado em Educação Física · Rio de Janeiro. Ciência, dedicação e resultados reais.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/physedguilherme/" class="social-btn" target="_blank" title="Instagram">📸</a>
+          <a href="https://wa.me/5521990019166" class="social-btn" target="_blank" title="WhatsApp">💬</a>
+          <a href="mailto:depaulaesilvaguilherme@gmail.com" class="social-btn" title="E-mail">✉</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#sobre">Sobre mim</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#metodo">Método</a></li>
+          <li><a href="#depoimentos">Resultados</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Planos</h4>
+        <ul>
+          <li><a href="#planos">Essential — R$197/mês</a></li>
+          <li><a href="#planos">Performance — R$397/mês</a></li>
+          <li><a href="#planos">Elite Presencial — R$797/mês</a></li>
+          <li><a href="#cta">Consulta gratuita</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#">📍 Rio de Janeiro, RJ</a></li>
+          <li><a href="mailto:depaulaesilvaguilherme@gmail.com">📧 depaulaesilvaguilherme@gmail.com</a></li>
+          <li><a href="https://wa.me/5521990019166" target="_blank">📱 (21) 99001-9166</a></li>
+          <li><a href="https://www.instagram.com/physedguilherme/" target="_blank">Instagram: @physedguilherme</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Guilherme de Paula e Silva · Personal Trainer · Todos os direitos reservados</p>
+      <p class="footer-copy" style="margin-top:0.4rem; font-size:0.68rem; color:#333;">Desenvolvido por Fidélis</p>
+      <div class="footer-legal">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // NAV SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // HAMBURGER
+  function toggleMenu() {
+    const nav = document.querySelector('.nav-links');
+    nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+    nav.style.flexDirection = 'column';
+    nav.style.position = 'fixed';
+    nav.style.top = '60px';
+    nav.style.left = '0';
+    nav.style.right = '0';
+    nav.style.background = 'rgba(5,5,5,0.98)';
+    nav.style.padding = '2rem';
+    nav.style.gap = '1.5rem';
+    nav.style.borderBottom = '1px solid #1e1e1e';
+    nav.style.zIndex = '99';
+  }
+
+  // FAQ
+  function toggleFaq(el) {
+    el.classList.toggle('open');
+  }
+
+  // REVEAL ON SCROLL
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // CTA
+  // SMOOTH ANCHOR SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // close mobile menu if open
+        const nav = document.querySelector('.nav-links');
+        if (nav && window.innerWidth <= 768) nav.style.display = 'none';
+      }
+    });
+  });
+
+  // COUNTER ANIMATION
+  function animateCounters() {
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const target = parseInt(el.textContent.replace(/\D/g, ''));
+      const suffix = el.textContent.replace(/[0-9]/g, '');
+      let count = 0;
+      const step = Math.ceil(target / 60);
+      const interval = setInterval(() => {
+        count = Math.min(count + step, target);
+        el.textContent = count + suffix;
+        if (count >= target) clearInterval(interval);
+      }, 25);
+    });
+  }
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounters(); statsObserver.disconnect(); } });
+  }, { threshold: 0.5 });
+  const stats = document.querySelector('.hero-stats');
+  if (stats) statsObserver.observe(stats);
+</script>
+</body>
+</html>
